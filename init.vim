@@ -46,6 +46,15 @@ augroup END
 "endregion
 
 "region Functions
+function! BuildComposer(info)
+  if a:info.status != 'unchanged' || a:info.force
+    if has('nvim')
+      !cargo build --release --locked
+    else
+      !cargo build --release --locked --no-default-features --features json-rpc
+    endif
+  endif
+endfunction
 function! Cyclefiles()
   try
     execute 'next'
@@ -57,11 +66,14 @@ endfunction
 
 "region Plugins
 call plug#begin(stdpath('data').'/plugged')
-Plug 'ghifarit53/tokyonight-vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'https://github.com/mbbill/undotree.git'
 Plug 'Shougo/defx.nvim'
+Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
+Plug 'ghifarit53/tokyonight-vim'
+Plug 'https://github.com/mbbill/undotree.git'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'mhinz/vim-startify'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'norcalli/nvim-colorizer.lua'
 call plug#end()
 "endregion
 
@@ -76,15 +88,33 @@ let g:tokyonight_enable_italic = 1
 colorscheme tokyonight
 "endregion
 
-"region Configure jiangmiao/auto-pairs
-let g:autopairs = {'(':')', '[':']', '{':'}', "'":"'", '"':'"', "`":"`"}
-let g:autopairscenterline = 0
-let g:autopairsmultilineclose = 0
+"region Configure sudo helper
+if exists("$DISPLAY")
+	let $SUDO_ASKPASS="/usr/bin/ksshaskpass"
+else
+	" TODO: Find a askpass helper
+endif
 "endregion
 
-"region Configure NetWR
+"region Configure Plugins
+" NetRW
 let g:netrw_winsize = -10
 let g:netrw_banner  =  0
 let g:netrw_preview =  1
+
+" Colorizer
+lua require'colorizer'.setup()
+
+" Startify
+let g:startify_fortune_use_unicode = 1
+let g:startify_custom_header = startify#center([
+	\ '     __      __   __      __    __    __   __       ',
+	\ '    /  \    / /| |\ \    / /|  / /|  /  \ /  \      ',
+	\ '   / /\ \  / / / \ \ \  / / / / / / / /\ V /\ \     ',
+	\ '  / /  \ \/ / /   \ \ \/ / / / / / / /  \_/  \ \    ',
+	\ ' /_/ /\ \__/ /     \ \__/ / /_/ / / / /\|_|/\ \ \   ',
+	\ ' |_|/  \_|_|/       \|__|/  |_|/  |_|/       \|_|  ',
+\ ])
+
 "endregion
-"
+
