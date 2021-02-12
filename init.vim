@@ -12,6 +12,7 @@ set foldmethod=syntax " Prefer to use syntax,
 set foldmarker=region,endregion " but if we use markers, prefer these
 set modeline
 set clipboard=unnamedplus
+set mouse=a
 set autoindent
 set laststatus=2
 set statusline=\ %m%f\ [%W%Y]%=%<%50(%L/%l:%c\ %)
