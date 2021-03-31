@@ -16,7 +16,12 @@ set mouse=a
 set autoindent
 set laststatus=2
 set statusline=\ %m%f\ [%W%Y]%=%<%50(%L/%l:%c\ %)
+"File-specific options
+augroup opts
+	autocmd FileType haskell set expandtab
+augroup END
 "endregion
+
 
 syntax enable
 
