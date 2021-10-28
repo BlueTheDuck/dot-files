@@ -30,6 +30,10 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_VERIFY
 setopt HUP
+setopt NO_LIST_BEEP # NO BEEPING!!! (when listing options)
+setopt AUTO_LIST # Automatically open options menu when tabbing
+setopt LIST_AMBIGUOUS # List options only when ambiguous
+setopt MENU_COMPLETE # Insert first match, but open menu
 #endregion
 
 #region Bind keys
@@ -74,6 +78,8 @@ alias icat='kitty icat'
 #endregion
 
 #region Programs
+export PROJECTS="$HOME/Projects"
+
 
 # Rustup
 fpath+=$ZDOTDIR/.zfunc
@@ -85,7 +91,7 @@ kitty + complete setup zsh | source /dev/stdin
 
 # FZF defaults & goto
 FZF_DEFAULTS_OPTS='--preview-window=:40%:wrap'
-source ~/Projects/sh-functions/goto.sh
+source "$PROJECTS/Tools/sh-tools/goto.sh"
 
 ZSH_THEME="$ZDOTDIR/.zsh-theme"
 source $ZSH_THEME
@@ -93,9 +99,20 @@ source $ZSH_THEME
 source $ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
-source ~/Projects/sh-functions/setup-env.sh
+source "$PROJECTS/Tools/sh-tools/setup-env.sh"
 
-eval $(ssh-agent);
+function shred_trash {
+	echo "Shred trash? (yes)"
+	read ANS
+	if [[ "$ANS" = "yes" ]]; then
+		echo Shredding trash
+		find "$XDG_DATA_HOME/Trash" -type f -print -exec shred -f -n 1 -z -u '{}' \;
+	else
+		echo "Answer '$ANS' doesn't mean anything"
+	fi
+}
+
+eval $(ssh-agent) > /dev/null;
 
 #endregion
 
