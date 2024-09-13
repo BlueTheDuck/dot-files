@@ -10,6 +10,7 @@ set backspace=indent,eol,start
 set number
 set foldmethod=syntax " Prefer to use syntax,
 set foldmarker=region,endregion " but if we use markers, prefer these
+set foldlevel=4
 set modeline
 set clipboard=unnamedplus
 set mouse=a
@@ -42,6 +43,7 @@ augroup mappings
   autocmd FileType sh     map <F5> :!clear; ./% <Enter>
   autocmd FileType rust   map <F5> :!clear; cargo run <Enter>
   autocmd FileType cpp    map <F5> :!clear; make run <Enter>
+  autocmd FileType c      map <S-F5> :!clear; gcc -O2 ./% && ./a.out <Enter>
 augroup END
 " Plugin specific mappings
 nnoremap <C-U> :UndotreeToggle \| UndotreeFocus<CR>
