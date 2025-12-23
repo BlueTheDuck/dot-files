@@ -43,7 +43,7 @@ augroup mappings
   autocmd FileType sh     map <F5> :!clear; ./% <Enter>
   autocmd FileType rust   map <F5> :!clear; cargo run <Enter>
   autocmd FileType cpp    map <F5> :!clear; make run <Enter>
-  autocmd FileType c      map <S-F5> :!clear; gcc -O2 ./% && ./a.out <Enter>
+  autocmd FileType c      map <S-F5> :!clear; gcc -Wall -O2 ./% && ./a.out <Enter>
 augroup END
 " Plugin specific mappings
 nnoremap <C-U> :UndotreeToggle \| UndotreeFocus<CR>
@@ -75,12 +75,12 @@ endfunction
 "region Plugins
 call plug#begin(stdpath('data').'/plugged')
 Plug 'Shougo/defx.nvim'
-Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
+"Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 Plug 'ghifarit53/tokyonight-vim'
 Plug 'https://github.com/mbbill/undotree.git'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'mhinz/vim-startify'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'lambdalisue/suda.vim'
 call plug#end()
@@ -124,6 +124,9 @@ let g:startify_custom_header = startify#center([
 	\ ' /_/ /\ \__/ /     \ \__/ / /_/ / / / /\|_|/\ \ \   ',
 	\ ' |_|/  \_|_|/       \|__|/  |_|/  |_|/       \|_|  ',
 \ ])
+
+" Suda
+let g:suda_smart_edit = 1
 
 "endregion
 
